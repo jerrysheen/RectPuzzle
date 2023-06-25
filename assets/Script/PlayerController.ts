@@ -24,7 +24,7 @@ export class PlayerController extends Component {
     private _targetPos: Vec3 = v3();
     private _isMoving = false;
 
-    //@property({ type: boolean })
+    @property({ type: Boolean})
     public Flipped : boolean  = false;
 
     start() {
@@ -42,7 +42,6 @@ export class PlayerController extends Component {
     //}
 
     jumpByStep() {
-        this.Flipped = !this.Flipped;
         //this._startJump = true;
        // this._jumpStep = step;
         //this._curJumpTime = 0;
@@ -57,9 +56,29 @@ export class PlayerController extends Component {
         //} else if (step === -2) {
         //    this.BodyAnim.play('twoStep');
         //}
-        this.BodyAnim.play('Flip');
-
+        if(this.Flipped)
+        {
+            this.playSwitchOffAnim();
+        }
+        else
+        {
+            this.playSwitchOnAnim();
+        }
+        console.log(this.Flipped);
     }
+
+    playSwitchOnAnim()
+    {
+        this.BodyAnim.play('SwitchOn');
+        this.Flipped = true;
+    }
+
+    playSwitchOffAnim()
+    {
+        this.BodyAnim.play('SwitchOff');
+        this.Flipped = false;
+    }
+
 
     onOnceJumpEnd() {
         this._isMoving = false;
