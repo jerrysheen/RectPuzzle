@@ -13,6 +13,9 @@ export class PlayerController extends Component {
     // @property
     // serializableDummy = 0;
 
+    @property({ type: Number })
+    public  _cubeId: number = 0;
+
     // for fake tween
     private _startJump: boolean = false;
     private _jumpStep: number = 0;
@@ -41,7 +44,7 @@ export class PlayerController extends Component {
 
     //}
 
-    jumpByStep() {
+    onClicked() {
         //this._startJump = true;
        // this._jumpStep = step;
         //this._curJumpTime = 0;
@@ -64,7 +67,7 @@ export class PlayerController extends Component {
         {
             this.playSwitchOnAnim();
         }
-        console.log(this.Flipped);
+        console.log(this._cubeId + "," + this.Flipped);
     }
 
     playSwitchOnAnim()
@@ -79,6 +82,18 @@ export class PlayerController extends Component {
         this.Flipped = false;
     }
 
+    playerSwitchAnim()
+    {
+        if(this.Flipped)
+        {
+            this.playSwitchOffAnim();
+        }
+        else
+        {
+            this.playSwitchOnAnim();
+        }
+        console.log(this._cubeId + "," + this.Flipped);
+    }
 
     onOnceJumpEnd() {
         this._isMoving = false;

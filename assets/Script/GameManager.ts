@@ -21,17 +21,20 @@ export class GameManager extends Component {
 
 
 	private _ray: geometry.Ray = new geometry.Ray();
+	private cubeList : Map<number, Node> = new Map<number, Node>();
+
+	private mapData : string[][] = [['1','2','1'],
+	['1','2','1'], 
+	['2','2','1']];
 
 	start() {
 		systemEvent.on(SystemEventType.TOUCH_START, this.onTouchStart, this);
 
 		// mapData[0][0] is at 0,0,0 position
 		// 2 means switch on
-		let mapData : string[][] = [['1','2','1'],
-									['1','2','1'], 
-									['2','2','1']];
-		for (let i = 0; i < mapData.length; i++) {
-			const element = mapData[i];
+
+		for (let i = 0; i < this.mapData.length; i++) {
+			const element = this.mapData[i];
 			for (let j = 0; j < element.length; j++) {
 				const element2 = element[j];
 				if(element2 === '0') continue;
@@ -39,6 +42,13 @@ export class GameManager extends Component {
 				redCube?.setParent(this.cubeRoot);
 				redCube?.setWorldPosition(new Vec3(j * this.cubeSize + this.padding * (j - 1), 0 , i * this.cubeSize + this.padding * (i - 1) ));
 				let playerControllerScript = redCube?.getComponent(PlayerController);
+				if(!playerControllerScript._cubeId)
+				{
+					console.log("set cube ID");
+					playerControllerScript._cubeId = i * element.length + j;
+					this.cubeList.set(playerControllerScript._cubeId, redCube);
+				}
+
 				if (element2 === '1')
 				{
 					playerControllerScript.playSwitchOffAnim();
@@ -53,6 +63,40 @@ export class GameManager extends Component {
 
 	}
 
+	changeNeighBorState(cubeId: number)
+	{
+		let cubeNode = this.cubeList.get(cubeId);
+		if(cubeNode)
+		{
+			let playerControllerScript = cubeNode.getComponent(PlayerController);
+			if(playerControllerScript)
+			{
+				let height = Math.floor(cubeId  / this.mapData[0].length);
+				let width = cubeId - this.mapData[0].length * height;
+				let tempArr = [-1, 0,1,0,-1];
+				console.log("IndexX: " + width + ", IndexY: " + height);
+				for(let i = 0; i < 4; i++)
+				{
+					let currIndexX = width + tempArr[i];
+					let currIndexY = height + tempArr[i + 1];
+					console.log("currIndexX: " + currIndexX + ", currIndexY: " + currIndexY);
+
+					if(currIndexX < 0 || currIndexX >= this.mapData[0].length || currIndexY < 0 || currIndexY >= this.mapData.length || this.mapData[currIndexX][currIndexY] === '0') continue;
+					let currCubeId = currIndexX+ currIndexY * this.mapData.length ;
+					let currCubeNode = this.cubeList.get(currCubeId);
+					if(currCubeNode)
+					{
+						let currPlayerControllerScript = currCubeNode.getComponent(PlayerController);
+						if(currPlayerControllerScript)
+						{
+							currPlayerControllerScript.playerSwitchAnim();
+						}
+					}
+				}
+			}
+		}
+
+	}
 
 
 	onTouchStart(touch: Touch, event: EventTouch) {
@@ -71,8 +115,9 @@ export class GameManager extends Component {
 					let player = currNode.parent.getComponent(PlayerController);
 					if (player)
 					{
-						player.jumpByStep();
+						player.onClicked();
 						// stop when first cube is clicked
+						this.changeNeighBorState(player._cubeId);
 						break;
 					}
 				}
