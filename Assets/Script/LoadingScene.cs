@@ -2,6 +2,8 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
@@ -21,6 +23,7 @@ public class LoadingScene : MonoBehaviour
             loadingBar = Canvas.transform.Find("LoadingBar").GetComponent<Slider>();
         }
         loadingBar.value = 0;
+        StartCoroutine(LoadScene());
 
     }
 
@@ -31,5 +34,22 @@ public class LoadingScene : MonoBehaviour
         {
             loadingBar.value += Time.deltaTime * 0.1f;
         }
+
+        if(loadingBar.value >= 1.0)
+        {
+            loadingBar.value = 1;
+        }
+    }
+
+    IEnumerator LoadScene()
+    {
+        var handle = Addressables.LoadSceneAsync("Assets/Scenes/TestCDNScenes.unity", UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+
+        handle.Completed += (op) =>
+        {
+            Debug.Log("LoadSceneAsync Completed");
+        };
+
+        yield return null;
     }
 }
