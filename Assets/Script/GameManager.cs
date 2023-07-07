@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
             loadingBar = Canvas.transform.Find("LoadingBar").GetComponent<Slider>();
         }
         loadingBar.value = 0;
-        //StartCoroutine(LoadScene());
+        StartCoroutine(LoadScene());
 
     }
 

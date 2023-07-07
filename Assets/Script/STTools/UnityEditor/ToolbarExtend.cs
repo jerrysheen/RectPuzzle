@@ -144,7 +144,7 @@ namespace EditorExtend
             rect.x += rect.width + space;
             if (GUI.Button(rect, "控制台"))
             {
-                //DebugPanelWindow.ShowDebugPanel();
+                DebugPanelWindow.ShowDebugPanel();
             }
             // if (GUI.Button(rect, "更新"))
             // {
@@ -165,7 +165,7 @@ namespace EditorExtend
             GUILayout.Space(10);
             if (GUILayout.Button(new GUIContent("控制台", EditorGUIUtility.FindTexture("Debug"))))
             {
-                //DebugPanelWindow.ShowDebugPanel();
+                DebugPanelWindow.ShowDebugPanel();
             }
 
             GUILayout.Space(100);
