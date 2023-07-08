@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1140742865973124226}
   - component: {fileID: 1140742865973124227}
+  - component: {fileID: 1539450229715898343}
   m_Layer: 0
   m_Name: IslandBase
   m_TagString: Untagged
@@ -150,3 +151,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &1539450229715898343
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140742865973124253}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: abf57f8248032334a9935eb5a3608a9a, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

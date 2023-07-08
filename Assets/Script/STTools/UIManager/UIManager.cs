@@ -68,7 +68,7 @@ namespace UIManagement
             }
         }
 
-        public void Clear()
+        public override void Clear()
         {
             if (_uiList != null)
             {
