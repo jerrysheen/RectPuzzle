@@ -7,7 +7,7 @@ public class FrameworkTester : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //WorldMapManager.instance.mCurActiveScene.curMediaType = MediaType.Home;
     }
 
     // Update is called once per frame

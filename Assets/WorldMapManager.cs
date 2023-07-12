@@ -30,16 +30,20 @@ public class WorldMapManager : MonoBehaviourSingle<WorldMapManager>
     private bool mIsInit = false;
     protected override void OnInit()
     {
+        
     }
 
     protected void OnDestroy()
     {
-        //        mMapMedia?.OnRemove();
-        //        mHomeMedia?.OnRemove();
+        //mMapMedia?.OnRemove();
+        mHomeMedia?.OnRemove();
     }
 
     public void InitMapData(string blockName, string modelName = "")
     {
+        // todo： 这个地方应该就是加载地图数据的地方，但是现在没有地图数据，所以先注释掉
+
+
         //string gridFilePath = HotfixManager.GetBinaryFilePath(blockName);
         //FileStream gridFs = File.OpenRead(gridFilePath);
 
@@ -64,24 +68,24 @@ public class WorldMapManager : MonoBehaviourSingle<WorldMapManager>
 
     public void InitMgr()
     {
-        //if (!mIsInit)
-        //{
-        //    CityConst.instance.InitData();
-        //    MapCalcConst.LoadConf();
-        //    mMediaDic.Clear();
-        //    mMapMedia?.OnRemove();
-        //    mMainCityMedia?.OnRemove();
+        if (!mIsInit)
+        {
+            CityConst.instance.InitData();
+            MapCalcConst.LoadConf();
+            mMediaDic.Clear();
+            //mMapMedia?.OnRemove();
+            mMainCityMedia?.OnRemove();
 
-        //    mMapMedia = new MapSceneMediator();
-        //    mMediaDic.Add(MediaType.World, mMapMedia);
-        //    mHomeMedia = new HomeSceneMediator();
-        //    mMediaDic.Add(MediaType.Home, mHomeMedia);
-        //    mMainCityMedia = new MainCityMediator();
-        //    mMediaDic.Add(MediaType.MainCity, mMainCityMedia);
-        //    mDungeonMedia = new DungeonSceneMediator();
-        //    mMediaDic.Add(MediaType.Dungeon, mDungeonMedia);
-        //    mIsInit = true;
-        //}
+            mMapMedia = new MapSceneMediator();
+            mMediaDic.Add(MediaType.World, mMapMedia);
+            mHomeMedia = new HomeSceneMediator();
+            mMediaDic.Add(MediaType.Home, mHomeMedia);
+            mMainCityMedia = new MainCityMediator();
+            mMediaDic.Add(MediaType.MainCity, mMainCityMedia);
+            mDungeonMedia = new DungeonSceneMediator();
+            mMediaDic.Add(MediaType.Dungeon, mDungeonMedia);
+            mIsInit = true;
+        }
     }
 
     private void Update()
