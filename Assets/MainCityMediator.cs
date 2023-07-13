@@ -76,6 +76,7 @@ public class MainCityMediator:SceneMediatorBase
 
     private void AddEasyTouchEvent()
     {
+        Debug.Log("Add Event");
         if ( ! _addEvent )
         {
             _addEvent = true;
@@ -141,14 +142,15 @@ public class MainCityMediator:SceneMediatorBase
     private void _TryTouch(Gesture gesture, EasyTouch.EventName type)
     {
         //try
-        //{ 
+        //{
         //    if (!GetInputContext(gesture.position, out _globalGridPos, out _worldPos, out _globalIndex))
         //    {
         //        return;
         //    }
-        //    int gridX,gridY;
-        //    _mainCityView.WorldPosToCityGridPos(_worldPos,out gridX,out gridY);
-        //    CityViewHelper.OnTouchHomeScene(_worldPos.x, _worldPos.z, gridX, gridY, (int)type, gesture.position.x, gesture.position.y);
+            int gridX, gridY;
+            _mainCityView.WorldPosToCityGridPos(_worldPos, out gridX, out gridY);
+            Debug.Log("Test grid X : Test grid Y" + gridX +  gridY);
+            //CityViewHelper.OnTouchHomeScene(_worldPos.x, _worldPos.z, gridX, gridY, (int)type, gesture.position.x, gesture.position.y);
         //}
         //catch (Exception e)
         //{
@@ -158,6 +160,8 @@ public class MainCityMediator:SceneMediatorBase
 
     private void EasyTouch_On_SimpleTap(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_SimpleTap");
+
         if (gesture.isOverGui) return;
         if (_touch2FingerCancelStatus == Touch2FingerCancelStatus.SkipNextSimpleTap)
         {
@@ -169,133 +173,158 @@ public class MainCityMediator:SceneMediatorBase
     
     private void EasyTouch_On_SwipeStart(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_SwipeStart");
+
         _TryTouch(gesture, EasyTouch.EventName.On_SwipeStart);
     }
     
     private void EasyTouch_On_Swipe(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_Swipe");
         _TryTouch(gesture, EasyTouch.EventName.On_Swipe);
+        
+        //todo :: 解除限定。
         //if (MapDraggableCamera.LOCK_DRAG) // 行军状态下是锁定地图拖动的
-        //{
-        //    EdgeMovement(gesture); // 不过如果滑动到地图边缘还是会触发自动移动地图
-        //}
+        {
+            EdgeMovement(gesture); // 不过如果滑动到地图边缘还是会触发自动移动地图
+        }
     }
-    
+
     void EasyTouch_On_SwipeEnd(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_SwipeEnd");
+
         _TryTouch(gesture, EasyTouch.EventName.On_SwipeEnd);
     }
     
     void EasyTouch_On_DoubleTap(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_DoubleTap");
+
         if (gesture.isOverGui) return;
         _TryTouch(gesture, EasyTouch.EventName.On_DoubleTap);
     }
 
     void EasyTouch_On_PinchOut(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_PinchOut");
+
         //DebugUtil.Log("EasyTouch_On_PinchOut " + gesture);
         _cameraScroller?.OnPinchOut(gesture);
     }
 
     void EasyTouch_On_PinchIn(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_PinchIn");
+
         //DebugUtil.Log("EasyTouch_On_PinchIn " + gesture);
         _cameraScroller?.OnPinchIn(gesture);
     }
     
     private void EasyTouch_On_PinchEnd(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_PinchEnd");
+
         //DebugUtil.Log("EasyTouch_On_PinchEnd " + gesture);
         _cameraScroller?.OnPinchEnd(gesture);
     }
     
     private void EasyTouch_On_LongTapStart(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_LongTapStart");
+
         _TryTouch(gesture, EasyTouch.EventName.On_LongTapStart);
     }
     
     private void EasyTouch_On_LongTap(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_LongTap");
+
         _TryTouch(gesture, EasyTouch.EventName.On_LongTap);
     }
     
     private void EasyTouch_On_LongTapEnd(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_LongTapEnd");
+
         _TryTouch(gesture, EasyTouch.EventName.On_LongTapEnd);
     }
 
     private Vector2Int _gestureOffset = Vector2Int.zero;
     private void EasyTouch_On_DragStart(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_DragStart");
+
         if (gesture.touchCount > 1) //  多点触控下 不走Drag逻辑
         {
             return;
         }
         
         _TryTouch(gesture, EasyTouch.EventName.On_LongTapEnd);
-        
+
         // Debug.Log("EasyTouch_On_DragStart");
-//        if (_interactingBuilding == null || !_interactingBuilding.isFakeBuilding)
-//        {
-//            _TrySelectTileGridPos(gesture, TileTouchType.DragStart);
-//        }
-//
-//        if (_interactingBuilding == null)
-//        {
-//            return;
-//        }
-//
-//        if ( ! ClickOnCity(_globalGridPos)  )
-//        {
-//            if ( _placeContext.mode != PlaceBuildingMode.Build )
-//            {
-//                ResetOperation();
-//            }
-//            return;
-//        }
-//
-//        
-//        Vector2Int InputPos = new Vector2Int(gridX,gridY);
-//        bool inputInInteractiveBuilding = CityUtils.ClickedOnBuilding(_interactingBuilding.cityGridPos,_interactingBuilding.width,InputPos);
-//        if ( ! _interactingBuilding.movable || ! inputInInteractiveBuilding )
-//        {
-////            if (_placeContext.mode != PlaceBuildingMode.Build)
-////            {
-////                ResetOperation();
-////            }            
-//            return;
-//        }
-//
-//       
-//        if (string.IsNullOrEmpty(_interactingBuilding.UID) /*|| _placeContext.lockMap.ContainsKey(_interactingBuilding.buildId)*/)
-//        {
-//            if (string.IsNullOrEmpty(_interactingBuilding.UID) && _placeContext.mode != PlaceBuildingMode.Build)
-//            {
-//                //DebugUtil.LogError("string.IsNullOrEmpty(_interactingBuilding.buildId)");
-//            }
-//            //  SendNotification(NotificationConst.SHOW_NOTICE,"上一次移动操作还未完成");
-////对于新建建筑不做处理,只对建造中的或者升级中的处理
-//            if (_placeContext.mode != PlaceBuildingMode.Build)
-//            {
-//                LeaveBuildingDragMode();
-//                return;
-//            }
-//        }
-//        //检测逻辑上是否可移动
-//        bool canMove = CityViewHelper.IsCityNodeCanMove(_interactingBuilding.UID,true);
-//        if (!canMove)
-//        {
-//            EasyTouch.instance.eventInterceptor += DragEventInterceptorNone;
-//            return;
-//        }
-//        
-//        _gestureOffset = InputPos - _interactingBuilding.cityGridPos;
-//        EnterBuildingDragMode();
+        //        if (_interactingBuilding == null || !_interactingBuilding.isFakeBuilding)
+        //        {
+        //            _TrySelectTileGridPos(gesture, TileTouchType.DragStart);
+        //        }
+        //
+        //        if (_interactingBuilding == null)
+        //        {
+        //            return;
+        //        }
+        //
+        //        if ( ! ClickOnCity(_globalGridPos)  )
+        //        {
+        //            if ( _placeContext.mode != PlaceBuildingMode.Build )
+        //            {
+        //                ResetOperation();
+        //            }
+        //            return;
+        //        }
+        //
+        //        
+        //        Vector2Int InputPos = new Vector2Int(gridX,gridY);
+        //        bool inputInInteractiveBuilding = CityUtils.ClickedOnBuilding(_interactingBuilding.cityGridPos,_interactingBuilding.width,InputPos);
+        //        if ( ! _interactingBuilding.movable || ! inputInInteractiveBuilding )
+        //        {
+        ////            if (_placeContext.mode != PlaceBuildingMode.Build)
+        ////            {
+        ////                ResetOperation();
+        ////            }            
+        //            return;
+        //        }
+        //
+        //       
+        //        if (string.IsNullOrEmpty(_interactingBuilding.UID) /*|| _placeContext.lockMap.ContainsKey(_interactingBuilding.buildId)*/)
+        //        {
+        //            if (string.IsNullOrEmpty(_interactingBuilding.UID) && _placeContext.mode != PlaceBuildingMode.Build)
+        //            {
+        //                //DebugUtil.LogError("string.IsNullOrEmpty(_interactingBuilding.buildId)");
+        //            }
+        //            //  SendNotification(NotificationConst.SHOW_NOTICE,"上一次移动操作还未完成");
+        ////对于新建建筑不做处理,只对建造中的或者升级中的处理
+        //            if (_placeContext.mode != PlaceBuildingMode.Build)
+        //            {
+        //                LeaveBuildingDragMode();
+        //                return;
+        //            }
+        //        }
+        //        //检测逻辑上是否可移动
+        //        bool canMove = CityViewHelper.IsCityNodeCanMove(_interactingBuilding.UID,true);
+        //        if (!canMove)
+        //        {
+        //            EasyTouch.instance.eventInterceptor += DragEventInterceptorNone;
+        //            return;
+        //        }
+        //        
+        //        _gestureOffset = InputPos - _interactingBuilding.cityGridPos;
+        //        EnterBuildingDragMode();
     }
 
     private void EasyTouch_On_TouchStart(Gesture gesture)
     {
+        Debug.Log("EasyTouch_On_TouchStart");
+
         if (_cameraScroller == null)
         {
             return;
@@ -319,7 +348,9 @@ public class MainCityMediator:SceneMediatorBase
     
     private void EasyTouch_On_TouchUp(Gesture gesture)
     {
-//        _cameraScroller?.OnTouchUp(gesture);
+        Debug.Log("EasyTouch_On_TouchUp");
+
+        //        _cameraScroller?.OnTouchUp(gesture);
         _TryTouch(gesture, EasyTouch.EventName.On_TouchUp);
     }
     

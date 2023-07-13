@@ -108,7 +108,8 @@ public class HomeSceneMediator : SceneMediatorBase
             defaultLevel = (int)_cacheCameraScale.y;
         }
         AddEasyTouchListener();
-        RefreshCameraParam(worldPosX, worldPosZ, defaultLevel, scale);
+        //todo :: add refresh
+       //RefreshCameraParam(worldPosX, worldPosZ, defaultLevel, scale);
         _homeScene?.EnterHomeScene(cityId);
         _curCityId = cityId;
     }

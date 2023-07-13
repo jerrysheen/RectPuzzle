@@ -28,6 +28,8 @@ public class SceneMediatorBase :IMapGlobalContext {
     protected Vector3 centerScreen = new Vector3(0.5f, 0.5f);
     protected void EdgeMovement(Gesture gesture)
     {
+        Debug.Log("Move To next Pos: " + 111);
+
         Vector3 screenPos = CameraManager.GetMainCamera().ScreenToViewportPoint(gesture.position);
         if (screenPos.x < 0.1f || screenPos.x > 0.9f || screenPos.y < 0.1f || screenPos.y > 0.9f)
         {

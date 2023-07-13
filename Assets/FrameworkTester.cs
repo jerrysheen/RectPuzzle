@@ -8,11 +8,15 @@ public class FrameworkTester : MonoBehaviour
     void Start()
     {
         //WorldMapManager.instance.mCurActiveScene.curMediaType = MediaType.Home;
+        //public void EnterHomeScene(string cityId, float worldPosX, float worldPosZ, int defaultLevel)
+        WorldMapManager.instance.InitMgr();
+        WorldMapManager.instance.mHomeMedia?.EnterHomeScene("test", 0.0f, 0.0f, 1);
+        WorldMapManager.instance.mHomeMedia?.EnterMainCityInteract();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(CameraManager.GetMainCamera().name);
+        //Debug.Log(CameraManager.GetMainCamera().name);
     }
 }
