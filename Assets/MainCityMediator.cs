@@ -149,7 +149,7 @@ public class MainCityMediator:SceneMediatorBase
         //    }
             int gridX, gridY;
             _mainCityView.WorldPosToCityGridPos(_worldPos, out gridX, out gridY);
-            Debug.Log("Test grid X : Test grid Y" + gridX +  gridY);
+            //Debug.Log("Test grid X : Test grid Y" + gridX +  gridY);
             //CityViewHelper.OnTouchHomeScene(_worldPos.x, _worldPos.z, gridX, gridY, (int)type, gesture.position.x, gesture.position.y);
         //}
         //catch (Exception e)

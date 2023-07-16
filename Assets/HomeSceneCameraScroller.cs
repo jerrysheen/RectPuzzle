@@ -127,6 +127,7 @@ public class HomeSceneCameraScroller:MapSceneCameraScroller
 	
 	public override bool OnSwipe(Gesture gesture)
 	{
+		Debug.Log("Swipe");
 		if (_onPinch)
 			return false;
 		

@@ -197,6 +197,7 @@ public class MapDraggableTarget : MonoBehaviour
 
 	public void Drag (Gesture gesture)
 	{
+		Debug.Log("Cam drag");
 		if (LOCK_DRAG) return;
 		// Prevents the initial jump when the drag threshold gets passed
 		if (smoothDragStart && !mDragStarted)

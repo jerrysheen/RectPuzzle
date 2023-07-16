@@ -28,9 +28,10 @@ public class SceneMediatorBase :IMapGlobalContext {
     protected Vector3 centerScreen = new Vector3(0.5f, 0.5f);
     protected void EdgeMovement(Gesture gesture)
     {
-        Debug.Log("Move To next Pos: " + 111);
 
         Vector3 screenPos = CameraManager.GetMainCamera().ScreenToViewportPoint(gesture.position);
+        Debug.Log("screenPos : " + screenPos);
+
         if (screenPos.x < 0.1f || screenPos.x > 0.9f || screenPos.y < 0.1f || screenPos.y > 0.9f)
         {
             Vector3 direction = screenPos;
@@ -42,7 +43,13 @@ public class SceneMediatorBase :IMapGlobalContext {
             // UnityEngine.Debug.LogError(nextWorldPos);
             if (cameraScroller != null)
             {
-                cameraScroller.MoveCameraToPosition(nextWorldPos,this.GetCameraMoveSpeed());
+                Debug.Log("CameraScroller is not null");
+
+                cameraScroller.MoveCameraToPosition(nextWorldPos, this.GetCameraMoveSpeed());
+            }
+            else 
+            {
+                Debug.Log("CameraScroller is null");
             }
         }
     }
